@@ -1,12 +1,13 @@
-import { SEARCH_BREED, DELETE_BREED } from '../constants';
+import { ADD_BREED, DELETE_BREED } from '../constants';
 import axios from 'axios';
 
-export const searchBreed = (name, image) => {
+export const addBreed = (name, image) => {
   const action = {
-    type: SEARCH_BREED,
+    type: ADD_BREED,
     name,
     image,
   };
+  console.log('acion in seachWeather', action);
   return action;
 };
 
@@ -27,7 +28,7 @@ export const fetchURLData = (breed) => {
         const name = breed;
         const image = response.data.message;
 
-        dispatch(searchBreed(name, image));
+        dispatch(addBreed(name, image));
       })
       .catch((error) => {
         const errorMsg = error.message;
@@ -37,17 +38,15 @@ export const fetchURLData = (breed) => {
   return action;
 };
 
-const RANDOM_URL = process.env.REACT_APP_RANDOM_URL;
-export const fetchRandomURLData = (breed) => {
+export const fetchRandomURLData = () => {
   const action = (dispatch) => {
     axios
       .get(`https://dog.ceo/api/breeds/image/random`)
       .then((response) => {
-        console.log('object', response);
-        const name = breed;
+        const name = 'Random Breed';
         const image = response.data.message;
 
-        dispatch(searchBreed(name, image));
+        dispatch(addBreed(name, image));
       })
       .catch((error) => {
         const errorMsg = error.message;

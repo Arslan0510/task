@@ -10,7 +10,6 @@ export class index extends Component {
     this.state = {
       breed: '',
       breedImage: '',
-      breedName: 'Random Breed',
       showData: false,
       errors: false,
     };
@@ -32,15 +31,15 @@ export class index extends Component {
       this.props.fetchURLData(breed);
     }
   };
-
-  handleRandomSubmit = (e) => {
+  handleRandom = (e) => {
     e.preventDefault();
-    const { breedName } = this.state;
-    this.props.fetchRandomURLData(breedName);
+
+    this.props.fetchRandomURLData();
   };
 
   BreedSearched() {
     const { breed } = this.props;
+    console.log('props form App', breed);
     return (
       <ul className='list-group col-sm-4'>
         {breed.map((br) => {
@@ -68,7 +67,7 @@ export class index extends Component {
     return (
       <div>
         <h1>Let's Search</h1>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <Input
             name='breed'
             label='Breed Name'
@@ -76,16 +75,11 @@ export class index extends Component {
             onChange={this.handleChange}
             error={errors}
           />
-          <button className='btn btn-success' onClick={this.handleSubmit}>
-            Search for Breed
-          </button>
-          <button
-            className='btn btn-success ml-2'
-            onClick={this.handleRandomSubmit}
-          >
-            Search for Random Breed
-          </button>
+          <button className='btn btn-success'>Search</button>
         </form>
+        <button className='btn btn-success mt-2' onClick={this.handleRandom}>
+          Random Search
+        </button>
         {this.BreedSearched()}
         {/* {showData && (
           <div className='row'>
